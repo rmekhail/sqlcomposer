@@ -1,11 +1,17 @@
 package org.sqlcomposer;
 
-import java.util.StringJoiner;
-
 public class SqlSubject {
-    StringBuilder queryBuilder = new StringBuilder();
+    protected StringBuilder queryBuilder = new StringBuilder();
 
-    String name;
+    private String name;
+
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public SqlSubject(String name) {
         this.name = name;
@@ -15,16 +21,16 @@ public class SqlSubject {
         return queryBuilder.toString();
     }
 
-    public SqlExpression select(){
+    public JoinableExpression select(){
         return select("*");
     }
 
-    public SqlExpression select(String... columns) {
+    public JoinableExpression select(String... columns) {
         queryBuilder.append("SELECT ")
                     .append(String.join(", " , columns))
                     .append(" FROM ")
                     .append(name);
-        return new SqlExpression(queryBuilder);
+        return new JoinableExpression(queryBuilder);
     }
 	public SqlExpression delete() {
         queryBuilder.append("DELETE FROM ")

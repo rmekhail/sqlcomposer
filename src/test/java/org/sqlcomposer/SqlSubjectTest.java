@@ -92,4 +92,12 @@ public class SqlSubjectTest extends TestCase {
         assertEquals(expected, actual);
 
     }
+
+    @Test
+    public void testJoin(){
+        String expected = "SELECT * FROM TEST JOIN FOO ON TEST.x = FOO.y WHERE x > 5;";
+        SqlSubject joined = new SqlSubject("FOO");
+        String actual = sqlSubject.select().join(joined, "TEST.x", "FOO.y").where("x > 5").toString();
+        assertEquals(expected, actual);
+    }
 }
